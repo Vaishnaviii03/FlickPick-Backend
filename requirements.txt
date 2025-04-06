@@ -4,4 +4,6 @@ Flask==2.2.5
 flask-cors==3.0.10
 waitress==2.1.2
 scikit-learn==1.2.2
+requests==2.31.0
+
 git+https://github.com/NicolasHug/Surprise.git@master#egg=scikit-surprise
