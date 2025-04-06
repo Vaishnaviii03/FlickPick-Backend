@@ -4,23 +4,29 @@ import pandas as pd
 import requests
 import pickle
 import gzip
+from io import BytesIO
 from surprise import SVD
 
 app = Flask(__name__)
 CORS(app)
 
-# 📦 Load compressed model/data files
-def load_pickle_gz(path):
-    with gzip.open(path, 'rb') as f:
+# 🔗 Hugging Face base URL (raw file access)
+HF_BASE_URL = "https://huggingface.co/vaishnaviii03/flickpick-models/resolve/main/"
+
+# 📦 Load .pkl.gz from Hugging Face
+def load_pickle_gz_from_hf(filename):
+    url = HF_BASE_URL + filename
+    response = requests.get(url)
+    with gzip.GzipFile(fileobj=BytesIO(response.content)) as f:
         return pickle.load(f)
 
 # 🔁 Load all resources
-indices = load_pickle_gz('model/indices.pkl.gz')
-id_map = load_pickle_gz('model/id_map.pkl.gz')
-cosine_sim = load_pickle_gz('model/cosine_sim.pkl.gz')
-algo = load_pickle_gz('model/algo.pkl.gz')
-smd = load_pickle_gz('model/smd_mini.pkl.gz')
-indices_map = load_pickle_gz('model/indices_map.pkl.gz')
+indices = load_pickle_gz_from_hf("indices.pkl.gz")
+id_map = load_pickle_gz_from_hf("id_map.pkl.gz")
+cosine_sim = load_pickle_gz_from_hf("cosine_sim.pkl.gz")
+algo = load_pickle_gz_from_hf("algo.pkl.gz")
+smd = load_pickle_gz_from_hf("smd_mini.pkl.gz")
+indices_map = load_pickle_gz_from_hf("indices_map.pkl.gz")
 
 # 🎞️ Poster fetch from TMDB
 def fetch_poster(movie_id):
@@ -34,7 +40,7 @@ def fetch_poster(movie_id):
         pass
     return "https://via.placeholder.com/300x450.png?text=No+Image"
 
-# 🔁 Hybrid recommender
+# 💡 Hybrid recommender
 def hybrid(userId, title):
     idx = indices.get(title)
     if idx is None:
@@ -50,7 +56,7 @@ def hybrid(userId, title):
 # ✅ Health check route
 @app.route('/')
 def home():
-    return "🎬 FlickPick API is running"
+    return "🎬 FlickPick API is running with Hugging Face models"
 
 # 🔍 Recommendation route
 @app.route('/api/recommend', methods=['POST'])
