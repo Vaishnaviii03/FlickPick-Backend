@@ -1,0 +1,48 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Flask-specific
+instance/
+.webassets-cache/
+*.log
+
+# Static files cache
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+# Pytest
+.cache/
+
+# Environment variables
+.env
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swo
+*.swp
+
+# Git LFS tracked files
+*.pkl
+*.mp4
+*.pdf
+*.pptx
+
+# Dataset folder
+data/

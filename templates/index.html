@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommender System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        h1, h2, h3 {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .recommended-movies {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .movie {
+            margin-bottom: 20px;
+        }
+
+        .movie img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Movie Recommender System</h1>
+    <form action="{{ url_for('recommend_movies') }}" method="post">
+        <label for="movie">Enter a movie title:</label>
+        <input type="text" id="movie" name="movie">
+        <label for="userId">Enter your User ID:</label>
+        <input type="text" id="userId" name="userId">
+        <input type="submit" value="Get Recommendations">
+    </form>
+    {% if movie_data %}
+    <div class="recommended-movies">
+        <h2>Recommended Movies:</h2>
+        {% for name, poster in movie_data %}
+        <div class="movie">
+            <h3>{{ name }}</h3>
+            <img src="{{ poster }}" alt="{{ name }} Poster">
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</body>
+
+</html>
