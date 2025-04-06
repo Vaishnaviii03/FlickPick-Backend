@@ -2,8 +2,7 @@ services:
   - type: web
     name: flickpick-backend
     env: python
-    buildCommand: |
-  apt-get update && apt-get install -y build-essential
-  pip install -r requirements.txt
-
-    startCommand: waitress-serve --port=$PORT app:app
+    buildCommand: ""
+    startCommand: "python run.py"
+    region: oregon
+    plan: free
