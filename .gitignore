@@ -39,7 +39,6 @@ instance/
 *.swp
 
 # Git LFS tracked files
-*.pkl
 *.mp4
 *.pdf
 *.pptx
